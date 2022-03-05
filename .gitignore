@@ -1,0 +1,10 @@
+fabcar.tar.gz
+log.txt
+/network/artifacts/crypto-config
+/network/artifacts/genesis.block
+/network/artifacts/mychannel.tx
+/network/artifacts/Org1MSPanchors.tx
+/network/artifacts/Org2MSPanchors.tx
+**/channel-artifacts/*
+
+/network/chaincode/fabcar/vendor/*
