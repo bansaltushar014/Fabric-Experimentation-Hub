@@ -6,5 +6,10 @@ log.txt
 /network/artifacts/Org1MSPanchors.tx
 /network/artifacts/Org2MSPanchors.tx
 **/channel-artifacts/*
-
 /network/chaincode/fabcar/vendor/*
+
+node_modules
+utm-client/*
+api/*
+**/org1-wallet/*
+**/org2-wallet/*
