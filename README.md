@@ -23,15 +23,15 @@ It handles the car creation, where one organization creates the car and other bu
 ## Getting Started
 
 * git clone https://github.com/bansaltushar014/Fabric-Task
-* cd fabric-task $~~~~~~~~~~~~~~~~~~~~$```-----Move inside fabric-task----```
-* cd network/ $~~~~~~~~~~~~~~~~~~~~~~~$```-----Move inside network folder----```
-* ./start.sh $~~~~~~~~~~~~~~~~~~~~~~~~~~$```-----Creates artifacts and run docker-compose, so on----```
-* cd /artifacts/config $~~~~~~~~~~~$```-----Manual run generate-cpp.sh file----```
-* ./generate-cpp.sh $~~~~~~~~~~~~~~$```-----Generates org1 and org2 json file----```
-* cd ../../../ $~~~~~~~~~~~~~~~~~~~~~~~~~~~~$```-----Comes out to root----```
-* cd backend/client $~~~~~~~~~~~~~~$```-----Go inside client directory----```
-* npm install  $~~~~~~~~~~~~~~~~~~~~~~~$```-----Install npm packages----```
-* npm start $~~~~~~~~~~~~~~~~~~~~~~~~~~$```-----It starts the application----```
+* cd fabric-task ```-----Move inside fabric-task----```
+* cd network/ ```-----Move inside network folder----```
+* ./start.sh ```-----Creates artifacts and run docker-compose, so on----```
+* cd /artifacts/config ```-----Manual run generate-cpp.sh file----```
+* ./generate-cpp.sh ```-----Generates org1 and org2 json file----```
+* cd ../../../ ```-----Comes out to root----```
+* cd backend/client ```-----Go inside client directory----```
+* npm install  ```-----Install npm packages----```
+* npm start ```-----It starts the application----```
 
 ### Dependencies
 
