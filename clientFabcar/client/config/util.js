@@ -1,6 +1,20 @@
 const path = require('path');
 const fs = require('fs');
 
+
+const getWalletPath = async (org) => {
+    let walletPath;
+    if (org == "Org1") {
+        walletPath = path.join(process.cwd(), 'org1-wallet');
+
+    } else if (org == "Org2") {
+        walletPath = path.join(process.cwd(), 'org2-wallet');
+    } else
+        return null
+    return walletPath
+
+}
+
 const CCP = async (org) => {
     let ccpPath;
     // const ccpPath = path.resolve(__dirname, '..', '..', '..', 'network', 'artifacts', 'config', 'connection-'+role+'.json');
@@ -24,4 +38,19 @@ const CCP = async (org) => {
     return ccp;
 }
 
-module.exports = { CCP }
+
+const getCaUrl = async (org, ccp) => {
+    let caURL;
+    if (org == "Org1") {
+        caURL = ccp.certificateAuthorities['ca.org1.example.com'].url;
+
+    } else if (org == "Org2") {
+        caURL = ccp.certificateAuthorities['ca.org2.example.com'].url;
+    } else
+        return null
+    return caURL
+
+}
+
+
+module.exports = { getWalletPath, CCP, getCaUrl }

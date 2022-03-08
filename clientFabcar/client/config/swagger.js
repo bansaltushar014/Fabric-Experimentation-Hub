@@ -4,9 +4,9 @@ dotenv.config();
 
 module.exports = {
     "open_api_version": "3.0.3",
-    "title": "E3DA API",
+    "title": "Fabric Task",
     "version": "1.0.0",
-    "description": "Controller for E3DA API Calls are defined here",
+    "description": "Controller for Fabric Task Calls are defined here",
     "url": "http://localhost:" + port,
     "apis": ["./routes/*.js"]
 }

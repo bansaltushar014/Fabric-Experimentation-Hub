@@ -14,13 +14,8 @@ const register = require('./registerUser');
 
 const invokeTransaction = async (channelName, chaincodeName, fcn, args, username, org_name, transientData) => {
     try {
-        // load the network configuration
-        // const ccpPath = path.resolve(__dirname, '..', '..', 'network', 'artifacts', 'config', 'connection-org1.json');
-        // let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
         const ccp = await CCP(org_name);
-        // Create a new file system based wallet for managing identities.
         const walletPath = await getWalletPath(org_name); 
-        // const walletPath = path.join(process.cwd(), 'wallet');
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
@@ -44,26 +39,23 @@ const invokeTransaction = async (channelName, chaincodeName, fcn, args, username
         const network = await gateway.getNetwork(channelName);
         const contract = network.getContract(chaincodeName);
 
-        // Submit the specified transaction.
-        // createCar transaction - requires 5 argument, ex: ('createCar', 'CAR12', 'Honda', 'Accord', 'Black', 'Tom')
-        // changeCarOwner transaction - requires 2 args , ex: ('changeCarOwner', 'CAR12', 'Dave')
-        if(fcn = "createCar"){
+        if(fcn == "createCar"){
             var result = await contract.submitTransaction('createCar', args.carKey, args.make, args.model, args.colour, args.owner);
         }        
-        // await contract.submitTransaction('WriteData', 'key2', "value2")
-        console.log('Transaction has been submitted');
-
+        if(fcn == "ChangeCarOwner"){
+            console.log("inside change car owner")
+            var result = await contract.submitTransaction('ChangeCarOwner', args.carKey, args.newOwner);
+        }
+        if(fcn == "Mint"){
+            var result = await contract.submitTransaction('Mint', args.amount);
+        }
+        if(fcn == "Transfer"){
+            var result = await contract.submitTransaction('Transfer', args.receiverId, args.amount);
+        }
         // Disconnect from the gateway.
         await gateway.disconnect();
 
-        result = JSON.parse(result.toString());
-
-        let response = {
-            message: "Success",
-            result
-        }
-
-        return response;
+        return "Transaction has been submitted";
 
     } catch (error) {
         console.error(`Failed to submit transaction: ${error}`);

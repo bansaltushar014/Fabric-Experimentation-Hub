@@ -1,4 +1,4 @@
-fabcar.tar.gz
+fabricTask.tar.gz
 log.txt
 /network/artifacts/crypto-config
 /network/artifacts/genesis.block
@@ -6,7 +6,7 @@ log.txt
 /network/artifacts/Org1MSPanchors.tx
 /network/artifacts/Org2MSPanchors.tx
 **/channel-artifacts/*
-/network/chaincode/fabcar/vendor/*
+/network/chaincode/fabricTask/vendor/*
 
 node_modules
 utm-client/*

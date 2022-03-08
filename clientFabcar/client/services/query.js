@@ -40,16 +40,28 @@ const queryTransaction = async (channelName, chaincodeName, fcn, args, username,
         const network = await gateway.getNetwork(channelName);
         const contract = network.getContract(chaincodeName);
 
-        // Evaluate the specified transaction.
-        // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
-        // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-        // const result = await contract.evaluateTransaction('ChangeCarOwner', 'Car1', 'TOM2');
-        let result = await contract.evaluateTransaction('queryAllCars');
+        let result;
+        if (fcn == "queryAllCars") {
+            result = await contract.evaluateTransaction('queryAllCars');
+            result = JSON.parse(result.toString());
+        }
+        if (fcn == "QueryCar") {
+            result = await contract.evaluateTransaction('QueryCar', args.carKey);
+            result = JSON.parse(result.toString());
+        }
+        if (fcn == "TotalSupply") {
+            result = await contract.evaluateTransaction('TotalSupply');
+        }
+        if (fcn == "getbalance") {
+            result = await contract.evaluateTransaction('ClientAccountBalance');
+        }
+        if (fcn == "getclientID") {
+            result = await contract.evaluateTransaction('ClientAccountID');
+        }
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         // Disconnect from the gateway.
         await gateway.disconnect();
-        result = JSON.parse(result.toString());
 
         let response = {
             message: "Success",

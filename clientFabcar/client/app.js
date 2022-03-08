@@ -6,9 +6,6 @@ const bodyParser = require('body-parser');
 const port = 3001;
 const indexRouter = require('./routes/index');
 
-const {connectDatabase, connectionDBStatus} = require('./services/database.js');
-
-
 const SWAGGER = require("./config/swagger.js");
 
 const swaggerUI = require("swagger-ui-express");
@@ -41,9 +38,6 @@ const swaggerOptions = {
 
 const specs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
-//  MongoDB connection
-connectDatabase();
-connectionDBStatus();
 
 app.use('/', indexRouter);
 

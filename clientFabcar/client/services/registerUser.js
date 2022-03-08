@@ -46,12 +46,11 @@ const getAffiliation = async (org) => {
 const enrollAdmin = async (org, ccp) => {
     try {
 
-        const caInfo = await getCaInfo(org, ccp) //ccp.certificateAuthorities['ca.org1.example.com'];
+        const caInfo = await getCaInfo(org, ccp) 
         const caTLSCACerts = caInfo.tlsCACerts.pem;
         const ca = new FabricCAServices(caInfo.url, { trustedRoots: caTLSCACerts, verify: false }, caInfo.caName);
 
-        // Create a new file system based wallet for managing identities.
-        const walletPath = await getWalletPath(org) //path.join(process.cwd(), 'wallet');
+        const walletPath = await getWalletPath(org)
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
