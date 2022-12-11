@@ -4,7 +4,7 @@ export PATH=${PWD}/../bin:$PATH
 export FABRIC_CFG_PATH=${PWD}/configtx
 export VERBOSE=false
 
-rm -rf ./crypto-config
+rm -rf ./artifacts/crypto-config
 rm genesis.block mychannel.tx Org1MSPanchors.tx Org2MSPanchors.tx Org3MSPanchors.tx 
 
 cryptogen generate --config=./artifacts/configtx/crypto-config.yaml --output=./artifacts/crypto-config/
