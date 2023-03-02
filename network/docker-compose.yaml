@@ -4,47 +4,47 @@ networks:
   test:
 
 services:
-  ca-org1:
-    image: hyperledger/fabric-ca
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca.org1.example.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
-      - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.org1.example.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
-    ports:
-      - "7054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
-    volumes:
-      - ./artifacts/crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
-      - ./artifacts/crypto-config/peerOrganizations/org1.example.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-    container_name: ca.org1.example.com
-    hostname: ca.org1.example.com
-    networks:
-      - test
+  # ca-org1:
+  #   image: hyperledger/fabric-ca
+  #   environment:
+  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+  #     - FABRIC_CA_SERVER_CA_NAME=ca.org1.example.com
+  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
+  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
+  #     - FABRIC_CA_SERVER_TLS_ENABLED=true
+  #     - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.org1.example.com-cert.pem
+  #     - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+  #   ports:
+  #     - "7054:7054"
+  #   command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+  #   volumes:
+  #     - ./artifacts/crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+  #     - ./artifacts/crypto-config/peerOrganizations/org1.example.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+  #   container_name: ca.org1.example.com
+  #   hostname: ca.org1.example.com
+  #   networks:
+  #     - test
 
-  ca-org2:
-    image: hyperledger/fabric-ca
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca.org2.example.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
-      - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.org2.example.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
-    ports:
-      - "8054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
-    volumes:
-      - ./artifacts/crypto-config/peerOrganizations/org2.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
-      - ./artifacts/crypto-config/peerOrganizations/org2.example.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-    container_name: ca.org2.example.com
-    hostname: ca.org2.example.com
-    networks:
-      - test
+  # ca-org2:
+  #   image: hyperledger/fabric-ca
+  #   environment:
+  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+  #     - FABRIC_CA_SERVER_CA_NAME=ca.org2.example.com
+  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem
+  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
+  #     - FABRIC_CA_SERVER_TLS_ENABLED=true
+  #     - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.org2.example.com-cert.pem
+  #     - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+  #   ports:
+  #     - "8054:7054"
+  #   command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+  #   volumes:
+  #     - ./artifacts/crypto-config/peerOrganizations/org2.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+  #     - ./artifacts/crypto-config/peerOrganizations/org2.example.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+  #   container_name: ca.org2.example.com
+  #   hostname: ca.org2.example.com
+  #   networks:
+  #     - test
 
   orderer.example.com:
     container_name: orderer.example.com
@@ -69,6 +69,9 @@ services:
       - ORDERER_METRICS_PROVIDER=prometheus
       - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8443
       - ORDERER_GENERAL_LISTENPORT=7050
+      - ORDERER_GENERAL_TLS_TLSHANDSHAKETIMESHIFT=200h
+      - ORDERER_GENERAL_CLUSTER_TLSHANDSHAKETIMESHIFT=200h
+      - ORDERER_GENERAL_AUTHENTICATION_NOEXPIRATIONCHECKS=true
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
     command: orderer
     ports:
@@ -104,6 +107,9 @@ services:
       - ORDERER_METRICS_PROVIDER=prometheus
       - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8443
       - ORDERER_GENERAL_LISTENPORT=8050
+      - ORDERER_GENERAL_TLS_TLSHANDSHAKETIMESHIFT=200h
+      - ORDERER_GENERAL_CLUSTER_TLSHANDSHAKETIMESHIFT=200h
+      - ORDERER_GENERAL_AUTHENTICATION_NOEXPIRATIONCHECKS=true
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
     command: orderer
     ports:
@@ -139,6 +145,9 @@ services:
       - ORDERER_METRICS_PROVIDER=prometheus
       - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8443
       - ORDERER_GENERAL_LISTENPORT=9050
+      - ORDERER_GENERAL_TLS_TLSHANDSHAKETIMESHIFT=200h
+      - ORDERER_GENERAL_CLUSTER_TLSHANDSHAKETIMESHIFT=200h
+      - ORDERER_GENERAL_AUTHENTICATION_NOEXPIRATIONCHECKS=true
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
     command: orderer
     ports:
