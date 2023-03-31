@@ -1,0 +1,46 @@
+version: "2"
+
+networks:
+  test:
+
+services:
+  peer2.org1.example.com:
+    container_name: peer2.org1.example.com
+    extends:
+      file: ../base.yaml
+      service: peer-base
+    environment:
+      - FABRIC_LOGGING_SPEC=info
+      - ORDERER_GENERAL_LOGLEVEL=info
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
+      - CORE_PEER_ID=peer2.org1.example.com
+      - CORE_PEER_ADDRESS=peer2.org1.example.com:11051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:11051
+      - CORE_PEER_CHAINCODEADDRESS=peer2.org1.example.com:11052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11052
+      # Exposed for discovery Service
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.org1.example.com:11051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.example.com:8051
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - CORE_METRICS_PROVIDER=prometheus
+      # - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:9440
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/crypto/peer/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/crypto/peer/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/crypto/peer/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/crypto/peer/msp
+    ports:
+      - 11051:11051
+    volumes:
+      - ./crypto-config-ca/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/msp:/etc/hyperledger/crypto/peer/msp
+      - ./crypto-config-ca/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls:/etc/hyperledger/crypto/peer/tls
+      - /var/run/:/host/var/run/
+      - ./../artifacts/:/etc/hyperledger/channel/
+      - ./../channel-artifacts/:/etc/hyperledger/channel/channel-artifacts
+      - /var/tushar/peer2-org1:/var/hyperledger/production
+    networks:
+      - test
