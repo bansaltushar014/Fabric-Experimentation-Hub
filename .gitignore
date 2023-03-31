@@ -14,7 +14,6 @@ api/*
 **/org1-wallet/*
 **/org2-wallet/*
 
-/network/addOrg
 /network/addPeerSnapshot
 /network/artifacts/create-certificate-with-ca/renewCert.sh
 /network/artifacts/create-certificate-with-ca/startCa.sh
