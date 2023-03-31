@@ -20,7 +20,7 @@ It handles the car creation, where one organization creates the car and other bu
 -   Mint - It mints token, only org1 is allowed to mint token
 -   Transfer - It transfer the token which takes the receiver clientId
 
-## Getting Started
+### Getting Started
 
 * git clone https://github.com/bansaltushar014/Fabric-Task
 * cd fabric-task ```-----Move inside fabric-task----```
@@ -32,6 +32,23 @@ It handles the car creation, where one organization creates the car and other bu
 * cd backend/client ```-----Go inside client directory----```
 * npm install  ```-----Install npm packages----```
 * npm start ```-----It starts the application----```
+
+### Environmet variable for peer0.org1 from /network path 
+
+- export CORE_PEER_TLS_ENABLED=true
+- export CORE_PEER_LOCALMSPID="Org1MSP"
+- export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/artifacts/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+- export CORE_PEER_MSPCONFIGPATH=${PWD}/artifacts/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+- export CORE_PEER_ADDRESS=localhost:7051
+
+### Environmet variable for peer0.org2 from /network path 
+
+- export CORE_PEER_TLS_ENABLED=true
+- export CORE_PEER_LOCALMSPID="Org2MSP"
+- export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/artifacts/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
+- export CORE_PEER_MSPCONFIGPATH=${PWD}/artifacts/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
+- export CORE_PEER_ADDRESS=localhost:9051
+
 
 ### Dependencies
 

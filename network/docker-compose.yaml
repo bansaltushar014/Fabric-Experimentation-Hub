@@ -83,6 +83,7 @@ services:
       - ./artifacts/genesis.block:/var/hyperledger/orderer/genesis.block
       - ./artifacts/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
       - ./artifacts/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls:/var/hyperledger/orderer/tls
+      - /var/tushar/orderer:/var/hyperledger/production
 
   orderer2.example.com:
     container_name: orderer2.example.com
@@ -121,6 +122,7 @@ services:
       - ./artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ./artifacts/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/msp:/var/hyperledger/orderer/msp
       - ./artifacts/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls:/var/hyperledger/orderer/tls
+      - /var/tushar/orderer2:/var/hyperledger/production
 
   orderer3.example.com:
     container_name: orderer3.example.com
@@ -159,6 +161,7 @@ services:
       - ./artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ./artifacts/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/msp:/var/hyperledger/orderer/msp
       - ./artifacts/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls:/var/hyperledger/orderer/tls
+      - /var/tushar/orderer3:/var/hyperledger/production
 
   couchdb0:
     container_name: couchdb0
@@ -248,6 +251,7 @@ services:
       - ./artifacts/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
       - ./artifacts/:/etc/hyperledger/channel/
+      - /var/tushar/peer0-org1:/var/hyperledger/production
     networks:
       - test
 
@@ -290,6 +294,7 @@ services:
       - ./artifacts/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
       - ./artifacts/:/etc/hyperledger/channel/
+      - /var/tushar/peer1-org1:/var/hyperledger/production
     networks:
       - test
 
@@ -332,6 +337,7 @@ services:
       - ./artifacts/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/etc/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
       - ./artifacts/:/etc/hyperledger/channel/
+      - /var/tushar/peer0-org2:/var/hyperledger/production
     networks:
       - test
 
@@ -374,5 +380,8 @@ services:
       - ./artifacts/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls:/etc/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
       - ./artifacts/:/etc/hyperledger/channel/
+      - /var/tushar/peer1-org2:/var/hyperledger/production
     networks:
       - test
+
+  

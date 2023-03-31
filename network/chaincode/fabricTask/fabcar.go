@@ -43,7 +43,6 @@ const allowancePrefix = "allowance"
 // type SmartContract struct {
 // 	contractapi.Contract
 // }
-
 // event provides an organized struct for emitting events
 type event struct {
 	From  string `json:"from"`
@@ -455,7 +454,7 @@ func (s *SmartContract) Approve(ctx contractapi.TransactionContextInterface, spe
 	if err != nil {
 		return fmt.Errorf("failed to set event: %v", err)
 	}
-
+	log.Printf("Random Test")
 	log.Printf("client %s approved a withdrawal allowance of %d for spender %s", owner, value, spender)
 
 	return nil
@@ -485,6 +484,7 @@ func (s *SmartContract) Allowance(ctx contractapi.TransactionContextInterface, o
 		allowance, err = strconv.Atoi(string(allowanceBytes)) // Error handling not needed since Itoa() was used when setting the totalSupply, guaranteeing it was an integer.
 	}
 
+	log.Printf("Random Test")
 	log.Printf("The allowance left for spender %s to withdraw from owner %s: %d", spender, owner, allowance)
 
 	return allowance, nil
@@ -544,6 +544,7 @@ func (s *SmartContract) TransferFrom(ctx contractapi.TransactionContextInterface
 		return fmt.Errorf("failed to set event: %v", err)
 	}
 
+	log.Printf("Random Test")
 	log.Printf("spender %s allowance updated from %d to %d", spender, currentAllowance, updatedAllowance)
 
 	return nil
