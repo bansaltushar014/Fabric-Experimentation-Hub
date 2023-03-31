@@ -11,6 +11,7 @@ rm -rf ./artifacts/config/connection-org1.json
 rm -rf ./artifacts/config/connection-org2.json
 rm -rf ./artifacts/genesis.block
 rm -rf ./artifacts/mychannel.tx
+rm -rf ./artifacts/org1channel.tx
 rm -rf ./artifacts/Org1MSPanchors.tx
 rm -rf ./artifacts/Org2MSPanchors.tx
 rm -rf ./addPeer/crypto-config-ca

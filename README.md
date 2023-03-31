@@ -6,6 +6,10 @@ It is a fabric task which contains 2 organization and 3 orderer node. Handles th
 
 It handles the car creation, where one organization creates the car and other buys it. There is also token creation api which handles mints token, provides total supply, balance of user and transfers the token. Integrate swagger for API execution in backend and used JWT token for authorization. 
 
+### Add Channel 
+
+It also shows to create a new channel and add it in the network. In this branch, it adds a new channel with name ```org1channel``` which refers to the profile ```OneOrgsChannel``` defined inside the configtx.yaml file. Inside the ```start.sh``` show the flow to create a new channel
+
 ### Functionalities:
 
 -   Register - Register of user via Hyperledger Fabric CA
