@@ -6,6 +6,10 @@ It is a fabric task which contains 2 organization and 3 orderer node. Handles th
 
 It handles the car creation, where one organization creates the car and other buys it. There is also token creation api which handles mints token, provides total supply, balance of user and transfers the token. Integrate swagger for API execution in backend and used JWT token for authorization. 
 
+## Branch Description - 3OrgSetupCryptogen
+
+This branch contains the setup with 3 Organization. All the files has the respective changes to make the setup of 3 Organizations 
+
 ### Functionalities:
 
 -   Register - Register of user via Hyperledger Fabric CA
