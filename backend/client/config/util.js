@@ -6,6 +6,8 @@ const getWalletPath = async (org) => {
         return path.join(process.cwd(), 'org1-wallet');
     } else if (org == "Org2") {
         return path.join(process.cwd(), 'org2-wallet');
+    } else if (org == "Org3") {
+        return path.join(process.cwd(), 'org3-wallet');
     } else
         return null
 }
@@ -18,6 +20,9 @@ const CCP = async (org) => {
 
     } else if (org == "Org2") {
         ccpPath = path.resolve(__dirname, '..', '..', '..', 'network', 'artifacts', 'config', 'connection-org2.json');
+
+    } else if (org == "Org3") {
+        ccpPath = path.resolve(__dirname, '..', '..', '..', 'network', 'artifacts', 'config', 'connection-org3.json');
     } else
         return null
     const fileExists = fs.existsSync(ccpPath);
@@ -39,6 +44,8 @@ const getCaUrl = async (org, ccp) => {
         return ccp.certificateAuthorities['ca.org1.example.com'].url;
     } else if (org == "Org2") {
         return ccp.certificateAuthorities['ca.org2.example.com'].url;
+    } else if (org == "Org3") {
+        return ccp.certificateAuthorities['ca.org3.example.com'].url;
     } else
         return null
 }

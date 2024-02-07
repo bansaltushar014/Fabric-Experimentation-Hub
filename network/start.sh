@@ -17,6 +17,8 @@ configtxgen -profile TwoOrgsChannel -configPath ./artifacts/configtx -outputAnch
 
 configtxgen -profile TwoOrgsChannel -configPath ./artifacts/configtx -outputAnchorPeersUpdate ./artifacts/Org2MSPanchors.tx -channelID mychannel -asOrg Org2MSP
 
+configtxgen -profile TwoOrgsChannel -configPath ./artifacts/configtx -outputAnchorPeersUpdate ./artifacts/Org3MSPanchors.tx -channelID mychannel -asOrg Org3MSP
+
 docker-compose up -d
 
 sleep 5 

@@ -5,6 +5,7 @@ log.txt
 /network/artifacts/mychannel.tx
 /network/artifacts/Org1MSPanchors.tx
 /network/artifacts/Org2MSPanchors.tx
+/network/artifacts/Org3MSPanchors.tx
 **/channel-artifacts/*
 /network/chaincode/fabricTask/vendor/*
 
@@ -13,3 +14,4 @@ utm-client/*
 api/*
 **/org1-wallet/*
 **/org2-wallet/*
+**/org3-wallet/*

@@ -155,7 +155,7 @@ const { auth } = require("../middleware/auth");
 app.use('/register', async (req, res) => {
     const username = req.body.username;
     const orgname = req.body.orgname;
-    if (orgname == 'Org1' || orgname == 'Org2') {
+    if (orgname == 'Org1' || orgname == 'Org2' || orgname == 'Org3') {
         const result = await registerUser(username, orgname);
         const token = await getAuthToken(username, orgname);
         res.send(result);;
@@ -190,7 +190,7 @@ app.use('/register', async (req, res) => {
 app.use('/login', async (req, res) => {
     const username = req.body.username;
     const orgname = req.body.orgname;
-    if (orgname == 'Org1' || orgname == 'Org2') {
+    if (orgname == 'Org1' || orgname == 'Org2' || orgname == 'Org3') {
         const result = await loginUser(username, orgname);
         if (result.success) {
             const token = await getAuthToken(username, orgname);

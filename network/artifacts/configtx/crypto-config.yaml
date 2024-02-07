@@ -77,3 +77,15 @@ PeerOrgs:
         - localhost
     Users:
       Count: 1
+# ---------------------------------------------------------------------------
+# Org3
+# ---------------------------------------------------------------------------
+  - Name: Org3
+    Domain: org3.example.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+      SANS:
+        - localhost
+    Users:
+      Count: 1

@@ -39,3 +39,14 @@ CAPEM=../crypto-config/peerOrganizations/org2.example.com/msp/tlscacerts/tlsca.o
 
 
 echo "$(json_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM $PEERPEM1 $P0PORT1)" > connection-org2.json
+
+ORG=3
+P0PORT=11051
+CAPORT=10054
+P0PORT1=12051
+PEERPEM=../crypto-config/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/msp/tlscacerts/tlsca.org3.example.com-cert.pem
+PEERPEM1=../crypto-config/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/msp/tlscacerts/tlsca.org3.example.com-cert.pem
+CAPEM=../crypto-config/peerOrganizations/org3.example.com/msp/tlscacerts/tlsca.org3.example.com-cert.pem
+
+
+echo "$(json_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM $PEERPEM1 $P0PORT1)" > connection-org3.json
