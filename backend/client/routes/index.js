@@ -1,11 +1,11 @@
-var express = require('express');
-var app = express();
-var { registerUser } = require("../services/registerUser");
-var { loginUser } = require("../services/loginUser");
-var { invokeTransaction } = require("../services/invoke");
-var { queryTransaction } = require("../services/query");
-var { getAuthToken } = require("../controllers/auth");
-var { auth } = require("../middleware/auth");
+const express = require('express');
+const app = express();
+const { registerUser } = require("../services/registerUser");
+const { loginUser } = require("../services/loginUser");
+const { invokeTransaction } = require("../services/invoke");
+const { queryTransaction } = require("../services/query");
+const { getAuthToken } = require("../controllers/auth");
+const { auth } = require("../middleware/auth");
 
 /**
  * @swagger
