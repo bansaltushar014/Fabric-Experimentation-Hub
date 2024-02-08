@@ -6,6 +6,10 @@ It is a fabric task which contains 2 organization and 3 orderer node. Handles th
 
 It handles the car creation, where one organization creates the car and other buys it. There is also token creation api which handles mints token, provides total supply, balance of user and transfers the token. Integrate swagger for API execution in backend and used JWT token for authorization. 
 
+## Branch Description - FabricCa 
+
+This branch contains the setup where fabric-ca is being used instead of cryptogen. It first generates the certificates using `./network/artifacts/create-certificate-with-ca/docker-compose.yaml` and then continues the same process as master branch 
+
 ### Functionalities:
 
 -   Register - Register of user via Hyperledger Fabric CA
