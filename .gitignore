@@ -6,9 +6,10 @@ log.txt
 /network/artifacts/Org1MSPanchors.tx
 /network/artifacts/Org2MSPanchors.tx
 **/channel-artifacts/*
-/network/chaincode/fabricTask/vendor/*
+/network/chaincode/fabricTask/vendor
 
 node_modules
+notes.txt
 utm-client/*
 api/*
 **/org1-wallet/*

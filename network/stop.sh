@@ -14,8 +14,11 @@ rm -rf ./artifacts/mychannel.tx
 rm -rf ./artifacts/Org1MSPanchors.tx
 rm -rf ./artifacts/Org2MSPanchors.tx
 rm -rf ./addPeer/crypto-config-ca
+rm -rf ../backend/client/org1-wallet
+rm -rf ../backend/client/org2-wallet
 sudo rm -rf ./artifacts/crypto-config
-sudo rm -rf ./artifacts/create-certificate-with-ca/fabric-ca/*
+sudo rm -rf ./artifacts/create-certificate-with-ca/crypto-config-ca
+sudo rm -rf ./artifacts/create-certificate-with-ca/fabric-ca
 sudo rm -rf /var/tushar 
 
 # Remove add Org 
