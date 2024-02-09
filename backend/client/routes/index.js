@@ -74,7 +74,47 @@ const { auth } = require("../middleware/auth");
  *         model: Zapin
  *         colour: Red
  *         owner: Tushar
- *     fetchCarById:
+ *     CreateCarTransiant:
+ *       type: object
+ *       required:
+ *         - key
+ *         - id
+ *         - make
+ *         - model
+ *         - colour
+ *         - owner
+ *         - price
+ *       properties:
+ *         key:
+ *           type: string
+ *           description: key
+ *         id:
+ *           type: string
+ *           description: id
+ *         make:
+ *           type: string
+ *           description: make
+ *         model:
+ *           type: string
+ *           description: model
+ *         colour:
+ *           type: string
+ *           description: colour
+ *         owner:
+ *           type: string
+ *           description: owner
+ *         price:
+ *           type: number
+ *           description: price
+ *       example:  
+ *         key: asset_properties
+ *         id: CAR12
+ *         make: CAR12
+ *         model: CAR12
+ *         colour: CAR12
+ *         owner: Tushar
+ *         price: CAR12
+ *     fetchCarById: 
  *       type: object
  *       required:
  *         - carKey
@@ -236,6 +276,43 @@ app.use('/login', async (req, res) => {
  */
 app.use('/createEntry', auth, async (req, res) => {
     const fcn = "createCar";
+    const args = req.body;
+    const result = await invokeTransaction("mychannel", "fabricTask", fcn, args, req.username, req.orgname, "data")
+    res.send("Entry has been created!");
+})
+
+/**
+ * @swagger
+ * /CreateCarTransiant:
+ *  post:
+ *    summary: Create New Entry for Car transiant data
+ *    tags:
+ *      - User
+ *    parameters:
+ *      - in: header
+ *        name: x-auth-token
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: Authentication token
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/CreateCarTransiant'
+ *    responses:
+ *      200:
+ *        description: User registration successfully
+ *      500:
+ *        description: Internal Server Error
+ *      400:
+ *        description: Bad Request
+ *      403:
+ *        description: Method Not Allowed
+ */
+app.use('/CreateCarTransiant', auth, async (req, res) => {
+    const fcn = "CreateCarTransiant";
     const args = req.body;
     const result = await invokeTransaction("mychannel", "fabricTask", fcn, args, req.username, req.orgname, "data")
     res.send("Entry has been created!");

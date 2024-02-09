@@ -14,6 +14,8 @@ import (
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
+const assetCollection = "collectionCarPrivateDetails"
+
 // SmartContract provides functions for managing a car
 type SmartContract struct {
 	contractapi.Contract
@@ -21,10 +23,16 @@ type SmartContract struct {
 
 // Car describes basic details of what makes up a car
 type Car struct {
+	ID     string `json:id`
 	Make   string `json:"make"`
 	Model  string `json:"model"`
 	Colour string `json:"colour"`
 	Owner  string `json:"owner"`
+}
+
+type AssetPrivateDetails struct {
+	ID             string `json:"id"`
+	Price 		   int    `json:"price"`
 }
 
 // QueryResult structure used for handling result of query
@@ -54,7 +62,7 @@ type event struct {
 // InitLedger adds a base set of cars to the ledger
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	cars := []Car{
-		Car{Make: "Toyota", Model: "Prius", Colour: "blue", Owner: "Tomoko"},
+		Car{Make: "Toyota", Model: "Prius", Colour: "blue", Owner: "Tomokooooo"},
 		Car{Make: "Ford", Model: "Mustang", Colour: "red", Owner: "Brad"},
 		Car{Make: "Hyundai", Model: "Tucson", Colour: "green", Owner: "Jin Soo"},
 		Car{Make: "Volkswagen", Model: "Passat", Colour: "yellow", Owner: "Max"},
@@ -92,6 +100,82 @@ func (s *SmartContract) CreateCar(ctx contractapi.TransactionContextInterface, c
 	return ctx.GetStub().PutState(carNumber, carAsBytes)
 }
 
+func (s *SmartContract) CreateCarTransiant(ctx contractapi.TransactionContextInterface) error {
+	// Get new asset from transient map
+	transientMap, err := ctx.GetStub().GetTransient()
+	if err != nil {
+		return fmt.Errorf("error getting transient: %v", err)
+	}
+
+	// Asset properties are private, therefore they get passed in transient field, instead of func args
+	transientAssetJSON, ok := transientMap["asset_properties"]
+	if !ok {
+		// log error to stdout
+		return fmt.Errorf("asset not found in the transient map input")
+	}
+
+	type assetTransientInput struct {
+		ID     string `json:id`
+		Make   string `json:"make"`
+		Model  string `json:"model"`
+		Colour string `json:"colour"`
+		Owner  string `json:"owner"`
+		Price  int    `json:"price"`
+	}
+
+	var assetInput assetTransientInput
+	err = json.Unmarshal(transientAssetJSON, &assetInput)
+	if err != nil {
+		return fmt.Errorf("failed to unmarshal JSON: %v", err)
+	}
+
+	// Check if asset already exists
+	assetAsBytes, err := ctx.GetStub().GetPrivateData(assetCollection, assetInput.ID)
+	if err != nil {
+		return fmt.Errorf("failed to get asset: %v", err)
+	} else if assetAsBytes != nil {
+		fmt.Println("Asset already exists: " + assetInput.ID)
+		return fmt.Errorf("this asset already exists: " + assetInput.ID)
+	}
+
+	// Make submitting client the owner
+	asset := Car{
+		Make:  assetInput.Make,
+		ID:    assetInput.ID,
+		Colour: assetInput.Colour,
+		Owner:  assetInput.Owner,
+		Model: assetInput.Model,
+	}
+	assetJSONasBytes, err := json.Marshal(asset)
+	if err != nil {
+		return fmt.Errorf("failed to marshal asset into JSON: %v", err)
+	}
+	err = ctx.GetStub().PutPrivateData("collectionCars", assetInput.ID, assetJSONasBytes)
+	if err != nil {
+		return fmt.Errorf("failed to put asset into private data collecton: %v", err)
+	}
+
+
+	// Save asset details to collection visible to owning organization
+	assetPrivateDetails := AssetPrivateDetails{
+		ID:             assetInput.ID,
+		Price: 			assetInput.Price,
+	}
+
+	assetPrivateDetailsAsBytes, err := json.Marshal(assetPrivateDetails) // marshal asset details to JSON
+	if err != nil {
+		return fmt.Errorf("failed to marshal into JSON: %v", err)
+	}
+
+	err = ctx.GetStub().PutPrivateData("collectionCarPrivateDetails", assetInput.ID, assetPrivateDetailsAsBytes)
+	if err != nil {
+		return fmt.Errorf("failed to put asset private details: %v", err)
+	}
+
+	return nil
+}
+
+
 // QueryCar returns the car stored in the world state with given id
 func (s *SmartContract) QueryCar(ctx contractapi.TransactionContextInterface, carNumber string) (*Car, error) {
 	carAsBytes, err := ctx.GetStub().GetState(carNumber)
@@ -108,6 +192,27 @@ func (s *SmartContract) QueryCar(ctx contractapi.TransactionContextInterface, ca
 	_ = json.Unmarshal(carAsBytes, car)
 
 	return car, nil
+}
+
+func (s *SmartContract) QueryCarTransiant(ctx contractapi.TransactionContextInterface, carNumber string) (*Car, error) {
+	assetJSON, err := ctx.GetStub().GetPrivateData(assetCollection, carNumber) //get the asset from chaincode state
+	if err != nil {
+		return nil, fmt.Errorf("failed to read asset: %v", err)
+	}
+	
+	//No Asset found, return empty response
+    if assetJSON == nil {
+		log.Printf("%v does not exist in collection %v", carNumber, assetCollection)
+		return nil, nil
+	}
+
+	var asset *Car
+	err = json.Unmarshal(assetJSON, &asset)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal JSON: %v", err)
+	}
+
+	return asset, nil
 }
 
 // QueryAllCars returns all cars found in world state

@@ -277,13 +277,10 @@ chaincodeInvokeInit() {
         --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
         --peerAddresses localhost:11051 --tlsRootCertFiles $PEER0_ORG3_CA \
         --isInit -c '{"Args":[]}'
-
 }
 
 # chaincodeInvokeInit
-
 chaincodeInvoke() {
-
     setGlobalsForPeer0Org1
 
     ## Init ledger
@@ -296,7 +293,24 @@ chaincodeInvoke() {
         --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
         --peerAddresses localhost:11051 --tlsRootCertFiles $PEER0_ORG3_CA \
         -c '{"function": "initLedger","Args":[]}'
+}
 
+
+export ASSET_PROPERTIES=$(echo -n "{\"id\":\"CAR10\",\"make\":\"prius2\",\"model\":\"prius\",\"colour\":\"green\",\"owner\":\"tushar\",\"price\":100}" | base64 | tr -d \\n)
+chaincodeInvokeTransiant() {
+    setGlobalsForPeer0Org1
+
+    ## Init ledger
+    peer chaincode invoke -o localhost:7050 \
+        --ordererTLSHostnameOverride orderer.example.com \
+        --tls $CORE_PEER_TLS_ENABLED \
+        --cafile $ORDERER_CA \
+        -C $CHANNEL_NAME -n ${CC_NAME} \
+        --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA \
+        --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \
+        --peerAddresses localhost:11051 --tlsRootCertFiles $PEER0_ORG3_CA \
+        -c '{"function": "CreateCarTransiant","Args":[]}' \
+        --transient "{\"asset_properties\":\"$ASSET_PROPERTIES\"}"
 }
 
 # chaincodeInvoke
@@ -308,6 +322,22 @@ chaincodeQuery() {
 }
 
 # chaincodeQuery
+
+chaincodeQueryTransient() {
+    setGlobalsForPeer0Org2
+    # Query Car by Id
+    peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "QueryCarTransiant","Args":["CAR10"]}'
+}
+
+# chaincodeQueryTransient
+
+chaincodeQueryTransientFail() {
+    setGlobalsForPeer0Org3
+    # Query Car by Id
+    peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "QueryCarTransiant","Args":["CAR10"]}'
+}
+
+# chaincodeQueryTransientFail
 
 # Run this function if you add any new dependency in chaincode
 presetup
@@ -326,5 +356,10 @@ queryCommitted
 chaincodeInvokeInit
 sleep 5
 chaincodeInvoke
-sleep 3
+chaincodeInvokeTransiant 
+sleep 1
 chaincodeQuery
+sleep 1
+chaincodeQueryTransient
+sleep 1
+chaincodeQueryTransientFail

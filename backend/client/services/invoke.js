@@ -15,7 +15,7 @@ const register = require('./registerUser');
 const invokeTransaction = async (channelName, chaincodeName, fcn, args, username, org_name, transientData) => {
     try {
         const ccp = await CCP(org_name);
-        const walletPath = await getWalletPath(org_name); 
+        const walletPath = await getWalletPath(org_name);
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
@@ -39,17 +39,36 @@ const invokeTransaction = async (channelName, chaincodeName, fcn, args, username
         const network = await gateway.getNetwork(channelName);
         const contract = network.getContract(chaincodeName);
 
-        if(fcn == "createCar"){
+        if (fcn == "createCar") {
             var result = await contract.submitTransaction('createCar', args.carKey, args.make, args.model, args.colour, args.owner);
-        }        
-        if(fcn == "ChangeCarOwner"){
+        }
+        if (fcn == "CreateCarTransiant") {
+            let carData = JSON.parse(JSON.stringify({
+                [args.key] :
+                {
+                    id: args.id,
+                    make: args.make,
+                    model: args.model,
+                    colour: args.colour,
+                    owner: args.owner,
+                    price: args.price
+                }
+            }
+            ))
+            console.log(carData)
+            key = Object.keys(carData)[0]
+            const transientBuffer = {}
+            transientBuffer[key] = Buffer.from(JSON.stringify(carData.asset_properties))
+            var result = await contract.createTransaction('CreateCarTransiant').setTransient(transientBuffer).submit();
+        }
+        if (fcn == "ChangeCarOwner") {
             console.log("inside change car owner")
             var result = await contract.submitTransaction('ChangeCarOwner', args.carKey, args.newOwner);
         }
-        if(fcn == "Mint"){
+        if (fcn == "Mint") {
             var result = await contract.submitTransaction('Mint', args.amount);
         }
-        if(fcn == "Transfer"){
+        if (fcn == "Transfer") {
             var result = await contract.submitTransaction('Transfer', args.receiverId, args.amount);
         }
         // Disconnect from the gateway.

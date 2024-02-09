@@ -8,7 +8,7 @@ log.txt
 /network/artifacts/Org3MSPanchors.tx
 **/channel-artifacts/*
 /network/chaincode/fabricTask/vendor/*
-
+notes.txt
 node_modules
 utm-client/*
 api/*
